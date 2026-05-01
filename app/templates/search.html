@@ -1,0 +1,6 @@
+{% extends "layout.html" %}{% block content %}<section class="page-title">
+    <h1>검색 결과</h1>
+    <p><strong>{{ q|safe }}</strong> 검색 결과입니다.</p>
+</section>{% if error %}<div class="soft-alert">검색 처리 중 오류가 발생했습니다.</div>{% endif %}<section class="product-grid">{% for
+    p in products %}{% include "partials_product_card.html" %}{% else %}<div class="empty">검색 결과가 없습니다.</div>{% endfor
+    %}</section>{% endblock %}

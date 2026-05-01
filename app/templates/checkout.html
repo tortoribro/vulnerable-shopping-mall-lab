@@ -1,0 +1,16 @@
+{% extends "layout.html" %}{% block content %}<section class="page-title">
+    <h1>주문/결제</h1>
+    <p>배송 정보를 확인해주세요.</p>
+</section>
+<section class="checkout-grid">
+    <form class="panel" method="POST" action="/checkout">
+        <h2>배송지 정보</h2><label>받는 사람</label><input type="text" name="receiver"
+            value="{{ user.name }}"><label>주소</label><input type="text" name="address"
+            value="{{ user.address }}"><button class="btn primary full" type="submit">결제 완료</button>
+    </form>
+    <aside class="summary">
+        <h2>주문 상품</h2>{% for p in items %}<div class="summary-row"><span>{{ p.name }}</span><strong>{{
+                "{:,}".format(p.sale_price) }}원</strong></div>{% endfor %}<div class="summary-total"><span>총
+                결제금액</span><strong>{{ "{:,}".format(total) }}원</strong></div>
+    </aside>
+</section>{% endblock %}

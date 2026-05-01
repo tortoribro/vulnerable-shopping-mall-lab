@@ -1,0 +1,17 @@
+{% extends "layout.html" %}{% block content %}<section class="page-title">
+    <h1>마이페이지</h1>
+    <p>{{ user.name }}님의 회원 정보를 관리합니다.</p>
+</section>
+<section class="checkout-grid">
+    <form class="panel" method="POST" action="/profile">
+        <h2>회원 정보 수정</h2><label>이메일</label><input type="email" name="email"
+            value="{{ user.email }}"><label>휴대폰</label><input type="text" name="phone"
+            value="{{ user.phone }}"><label>주소</label><input type="text" name="address"
+            value="{{ user.address }}"><button class="btn primary full" type="submit">수정하기</button>
+    </form>
+    <aside class="panel">
+        <h2>내 쇼핑 정보</h2>
+        <p><strong>아이디:</strong> {{ user.username }}</p>
+        <p><strong>등급:</strong> {{ user.role }}</p><a class="btn outline full" href="/orders">주문 내역 보기</a>
+    </aside>
+</section>{% endblock %}

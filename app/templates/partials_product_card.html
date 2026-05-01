@@ -1,0 +1,16 @@
+<article class="product-card">
+  <a href="/product/{{ p.id }}">
+    <div class="product-thumb {{ p.color_class }}"><span>{{ p.category }}</span></div>
+    <div class="product-info">
+      <p class="sku">{{ p.sku }}</p>
+      <h3>{{ p.name }}</h3>
+      <p>{{ p.description }}</p>
+      <div class="rating">★ {{ p.rating }} · 재고 {{ p.stock }}</div>
+      <div class="price-row"><span class="sale">{{ "{:,}".format(p.sale_price) }}원</span><span class="origin">{{ "{:,}".format(p.price) }}원</span></div>
+    </div>
+  </a>
+  <div class="product-actions">
+    <a class="btn mini" href="/product/{{ p.id }}">상세보기</a>
+    <a class="btn mini primary" href="/cart/add?product_id={{ p.id }}&next=/cart">담기</a>
+  </div>
+</article>

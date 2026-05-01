@@ -1,0 +1,11 @@
+{% extends "layout.html" %}{% block content %}<section class="auth-page">
+    <div class="auth-card wide">
+        <h1>1:1 문의</h1>
+        <p>상품, 배송, 교환/반품 관련 문의를 남겨주세요.</p>
+        <form action="/support" method="POST"><label>이름</label><input type="text" name="name"
+                value="{{ user.name if user else '' }}"><label>이메일</label><input type="email" name="email"
+                value="{{ user.email if user else '' }}"><label>문의 내용</label><textarea name="message"
+                placeholder="문의 내용을 입력하세요."></textarea><button class="btn primary full" type="submit">문의 등록</button>
+        </form>
+    </div>
+</section>{% endblock %}

@@ -1,0 +1,6 @@
+{% extends "layout.html" %}{% block content %}<section class="page-title">
+    <h1>{{ name }}</h1>
+    <p>{{ name }} 카테고리의 추천 상품을 확인하세요.</p>
+</section>
+<section class="product-grid">{% for p in products %}{% include "partials_product_card.html" %}{% else %}<div
+        class="empty">등록된 상품이 없습니다.</div>{% endfor %}</section>{% endblock %}

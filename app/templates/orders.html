@@ -1,0 +1,14 @@
+{% extends "layout.html" %}{% block content %}<section class="page-title">
+    <h1>주문 내역</h1>
+    <p>최근 주문 상태를 확인하세요.</p>
+</section>
+<section class="order-list">{% for o in orders %}<article class="order-card">
+        <div>
+            <p class="sku">{{ o.order_no }}</p>
+            <h3>{{ o.item_summary }}</h3>
+            <p>수령인: {{ o.receiver }}</p>
+            <p>배송지: {{ o.address }}</p>
+        </div>
+        <div class="order-side"><span class="status">{{ o.status }}</span><strong>{{ "{:,}".format(o.total_price)
+                }}원</strong><small>{{ o.created_at }}</small></div>
+    </article>{% else %}<div class="empty">주문 내역이 없습니다.</div>{% endfor %}</section>{% endblock %}

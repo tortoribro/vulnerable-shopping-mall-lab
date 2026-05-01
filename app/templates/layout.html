@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title if title else "LUMINA Market" }}</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="notice-bar">Spring Sale · 신규 회원 무료배송 · 오늘 주문 시 빠른 출고</div>
+  <header class="site-header">
+    <a class="brand" href="/">LUMINA<span>Market</span></a>
+    <form class="header-search" action="/search" method="GET">
+      <input type="text" name="q" placeholder="상품명, 카테고리 검색">
+      <button type="submit">검색</button>
+    </form>
+    <nav class="nav">
+      <a href="/category/Fashion">패션</a>
+      <a href="/category/Tech">테크</a>
+      <a href="/category/Life">라이프</a>
+      <a href="/category/Bags">가방</a>
+      <a href="/support">고객센터</a>
+      <a href="/cart">장바구니</a>
+      {% if user %}
+        <a href="/profile">마이페이지</a>
+        <a href="/logout">로그아웃</a>
+      {% else %}
+        <a href="/login">로그인</a>
+      {% endif %}
+    </nav>
+  </header>
+  <main>{% block content %}{% endblock %}</main>
+  <footer class="footer">
+    <div><h3>LUMINA Market</h3><p>일상을 더 가볍고 감각적으로 만드는 라이프스타일 편집샵</p></div>
+    <div><h4>고객지원</h4><a href="/support">1:1 문의</a><a href="/orders">주문조회</a><a href="/promo?next=/">이벤트</a></div>
+    <div><h4>회사정보</h4><p>서울특별시 강남구 테헤란로 100</p><p>contact@lumina.local</p></div>
+  </footer>
+</body>
+</html>
