@@ -1,0 +1,21 @@
+{% extends "layout.html" %}{% block content %}<section class="page-title">
+    <h1>장바구니</h1>
+    <p>담은 상품을 확인하고 주문을 진행하세요.</p>
+</section>
+<section class="cart-wrap">
+    <div class="cart-items">{% for p in items %}<article class="cart-item">
+            <div class="cart-thumb {{ p.color_class }}"></div>
+            <div>
+                <h3>{{ p.name }}</h3>
+                <p>{{ p.description }}</p><strong>{{ "{:,}".format(p.sale_price) }}원</strong>
+            </div>
+        </article>{% else %}<div class="empty">장바구니가 비어 있습니다.</div>{% endfor %}</div>
+    <aside class="summary">
+        <h2>주문 요약</h2>
+        <div class="summary-row"><span>상품금액</span><strong>{{ "{:,}".format(total) }}원</strong></div>
+        <div class="summary-row"><span>배송비</span><strong>0원</strong></div>
+        <div class="summary-total"><span>총 결제금액</span><strong>{{ "{:,}".format(total) }}원</strong></div><a
+            class="btn primary full" href="/checkout">주문하기</a><a class="btn outline full" href="/cart/clear">장바구니
+            비우기</a>
+    </aside>
+</section>{% endblock %}
