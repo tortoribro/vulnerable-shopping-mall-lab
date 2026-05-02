@@ -22,7 +22,7 @@ Network   = Host-only 또는 내부 네트워크
 
 - Flask 기반 웹 애플리케이션 구축
 - Apache Reverse Proxy 구성
-- 내부 DNS 서버 구성
+- DNS 서버 구성
 - UFW 방화벽 정책 설정
 - SQL Injection, XSS, CSRF, IDOR 취약점 재현
 - Apache 로그 및 Flask 로그 기반 공격 흔적 분석
@@ -185,16 +185,20 @@ Apache 80/tcp -> Flask 127.0.0.1:5001
 
 ## 9. Apache Reverse Proxy 설정
 
+`Apache 설치`
+```bash
+sudo apt update
+sudo apt install apache2 -y
+```
 Apache 프록시 모듈 활성화:
-
 ```bash
 sudo a2enmod proxy
 sudo a2enmod proxy_http
 sudo systemctl restart apache2
 ```
-
-VirtualHost 설정 예시:
-
+VirtualHost 설정 (예시):
+`설정파일: shopping.host.conf`
+`경로:/etc/apache2/sites-available/shopping.host.conf`
 ```apache
 
 <VirtualHost *:80>
@@ -209,7 +213,10 @@ VirtualHost 설정 예시:
     ErrorLog ${APACHE_LOG_DIR}/shopping_mall_error.log
     CustomLog ${APACHE_LOG_DIR}/shopping_mall_access.log combined
 </VirtualHost>
-
+```
+사이트 활성화
+```bash
+sudo a2ensite shopping.host.conf
 ```
 설정 검사:
 ```Bash
@@ -218,20 +225,27 @@ sudo apache2ctl -S
 sudo systemctl restart apache2
 ```
 
-## 10.내부 DNS서버 구성
+## 10.DNS서버 구성
 
-Ubuntu 서버에 dnsmasq를 이용해 실습망 내부 DNS 서버를 구성했습니다.
+kali Linux 가상환경을 사용하여 DNS서버를 구축하였습니다.
+
+설치
+```bash
+ sudo apt update
+ sudo apt install dnsmasq dnsutils -y-y
+ ```
 
 예시 설정 파일:
-
+`설정파일이름:lab-dns.conf`
+`경로:/etc/dnsmasq.d/lab-dns.conf`
 ```conf
-listen-address=Ubuntu_IP
+listen-address=Kali_IP #DNS 서버 주소
 bind-interfaces
 
 server=1.1.1.1
 server=8.8.8.8
 
-address=/shopping.host/Ubuntu_IP
+address=/shopping.host/Ubuntu_IP #웹서버 주소
 address=/www.shopping.host/Ubuntu_IP
 address=/admin.shopping.host/Ubuntu_IP
 
@@ -240,24 +254,20 @@ address=/admin.shopping.host/Ubuntu_IP
 DNS 서버 재시작:
 
 ```Bash
-
 sudo systemctl restart dnsmasq
 sudo systemctl status dnsmasq --no-pager
 ```
 DNS 질의 테스트:
 
 ```Bash
-dig @Ubuntu_IP www.shopping.host
-nslookup www.shopping.host Ubuntu_IP
+dig @Kali_IP www.shopping.host
+nslookup www.shopping.host Kali_IP
 ```
 
-Kali에서 Ubuntu DNS 서버를 사용하도록 설정:
-
-```Bash
-sudo nano /etc/resolv.conf
-```
+호스트환경에서 DNS 서버를 사용하도록 설정 (클라이언트 컴퓨터에서 설정):
+`경로:/etc/resolv.conf`
 ```bash
-nameserver Ubuntu_IP # DNS서버로 질의
+nameserver Kali_IP # DNS서버로 질의
 ```
 
 ## 11. UFW 방화벽 정책
